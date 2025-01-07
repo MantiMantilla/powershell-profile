@@ -104,7 +104,7 @@ function Update-PowerShell {
 
 # skip in debug mode
 if (-not $debug) {
-    Update-PowerShell
+    # Update-PowerShell
 } else {
     Write-Warning "Skipping PowerShell update in debug mode"
 }
