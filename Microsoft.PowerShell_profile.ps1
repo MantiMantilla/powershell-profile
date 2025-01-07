@@ -56,10 +56,10 @@ function Update-Profile {
     try {
         $url = "https://raw.githubusercontent.com/MantiMantilla/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
         $oldhash = Get-FileHash $PROFILE
-        Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
-        $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
+        Invoke-RestMethod $url -OutFile "$env:LOCALAPPDATA/Temp/Microsoft.PowerShell_profile.ps1"
+        $newhash = Get-FileHash "$env:LOCALAPPDATA/Temp//Microsoft.PowerShell_profile.ps1"
         if ($newhash.Hash -ne $oldhash.Hash) {
-            Copy-Item -Path "$env:temp/Microsoft.PowerShell_profile.ps1" -Destination $PROFILE -Force
+            Copy-Item -Path "$env:LOCALAPPDATA/Temp//Microsoft.PowerShell_profile.ps1" -Destination $PROFILE -Force
             Write-Host "Profile has been updated. Please restart your shell to reflect changes" -ForegroundColor Magenta
         } else {
             Write-Host "Profile is up to date." -ForegroundColor Green
@@ -67,7 +67,7 @@ function Update-Profile {
     } catch {
         Write-Error "Unable to check for `$profile updates: $_"
     } finally {
-        Remove-Item "$env:temp/Microsoft.PowerShell_profile.ps1" -ErrorAction SilentlyContinue
+        Remove-Item "$env:LOCALAPPDATA/Temp/Microsoft.PowerShell_profile.ps1" -ErrorAction SilentlyContinue
     }
 }
 
@@ -123,7 +123,7 @@ function Clear-Cache {
 
     # Clear User Temp
     Write-Host "Clearing User Temp..." -ForegroundColor Yellow
-    Remove-Item -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "$env:LOCALAPPDATA/Temp/*" -Recurse -Force -ErrorAction SilentlyContinue
 
     # Clear Internet Explorer Cache
     Write-Host "Clearing Internet Explorer Cache..." -ForegroundColor Yellow
